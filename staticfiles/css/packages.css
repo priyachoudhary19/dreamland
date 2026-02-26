@@ -1,0 +1,103 @@
+.packages-section {
+    padding: 80px 60px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 34px;
+    margin-bottom: 60px;
+    color: #2f3e6b;
+}
+
+.packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.card {
+    background: linear-gradient(145deg, #ffffff, #f2f4ff);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.card h3 {
+    color: #2f3e6b;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.price {
+    margin: 15px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+.card button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(to right, #8fa9db, #b29cd9);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card button:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .packages-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .packages-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* Page ko full height dena */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Packages section ko expand karna */
+.packages-section {
+    flex: 1;
+}
+
+/* Bottom-left back link */
+.bottom-back {
+    padding: 20px 40px;
+}
+
+.bottom-back a {
+    text-decoration: none;
+    color: #2f3e6b;
+    font-weight: 600;
+}
+
+.bottom-back a:hover {
+    text-decoration: underline;
+}
