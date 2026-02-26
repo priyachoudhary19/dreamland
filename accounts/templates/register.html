@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Minimal Login Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="//fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/reg.css' %}">
+    {% if saved %}
+    <script>
+        alert('{{saved}}')
+    </script>
+    {% endif %}
+
+    {% if error %}
+    <script>
+        alert('{{error}}')
+    </script>
+    {% endif %}
+</head>
+
+<body>
+
+<div class="w3l-loginblock signin-form">
+
+    <div class="logo">
+        <h1><a href="#">Registeration page</a></h1>
+    </div>
+
+    <div class="login-form">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-grid">
+
+                <div class="input-field">
+                    <label>name</label>
+                    <input type="text" name="name" placeholder="name" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Mobile</label>
+                    <input type="text" name="mobile" placeholder="Contact No" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Address</label>
+                    <textarea name="address" placeholder="Enter Address" required></textarea>
+                </div>
+
+                <div class="input-field">
+                    <label>City</label>
+                    <input type="text" name="city" placeholder="Enter City" required>
+                </div>
+
+                <div class="input-field">
+                    <label>State</label>
+                    <input type="text" name="state" placeholder="Enter State" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Pincode</label>
+                    <input type="text" name="pincode" placeholder="Enter Pincode" required>
+                </div>
+
+            </div>
+
+            <div class="check-remain">
+                <input type="checkbox" name="remember">
+                <span>Remember Me</span>
+            </div>
+
+            <button type="submit" class="btn">Register Now</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

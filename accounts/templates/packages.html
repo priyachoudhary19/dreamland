@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Packages</title>
+    <link rel="stylesheet" href="{% static 'css/packages.css' %}">
+</head>
+<body>
+
+<section class="packages-section">
+
+    <h2 class="section-title">Our Travel Packages 🌍</h2>
+
+    <div class="packages-grid">
+
+        <div class="card">
+            <h3>Goa Getaway 🏖</h3>
+            <p>3 Days / 2 Nights</p>
+            <div class="price">₹7,999</div>
+            <button>Book Now</button>
+        </div>
+
+        <div class="card">
+            <h3>Manali Adventure ❄</h3>
+            <p>4 Days / 3 Nights</p>
+            <div class="price">₹9,999</div>
+            <button>Book Now</button>
+        </div>
+
+        <div class="card">
+            <h3>Jaipur Heritage 🏰</h3>
+            <p>2 Days / 1 Night</p>
+            <div class="price">₹5,999</div>
+            <button>Book Now</button>
+        </div>
+
+        <div class="card">
+            <h3>Kerala Backwaters 🌴</h3>
+            <p>5 Days / 4 Nights</p>
+            <div class="price">₹12,999</div>
+            <button>Book Now</button>
+        </div>
+
+        <div class="card">
+            <h3>Shimla Retreat 🌄</h3>
+            <p>3 Days / 2 Nights</p>
+            <div class="price">₹8,499</div>
+            <button>Book Now</button>
+        </div>
+
+        <div class="card">
+            <h3>Dubai Escape ✈</h3>
+            <p>4 Days / 3 Nights</p>
+            <div class="price">₹29,999</div>
+            <button>Book Now</button>
+        </div>
+
+    </div>
+
+</section>
+<div class="bottom-back">
+    <a href="{% url 'home' %}">← Back to Home</a>
+</div>
+
+</body>
+</html>

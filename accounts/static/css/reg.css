@@ -1,0 +1,147 @@
+/* Google Font (optional but recommended) */
+/* Add in HTML head:
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+*/
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Background */
+body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #eaf4ff, #f6efff);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Card */
+.w3l-loginblock {
+    width: 850px;
+    background: #ffffff;
+    padding: 40px 45px;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    transition: 0.3s ease;
+}
+
+/* Subtle hover effect */
+.w3l-loginblock:hover {
+    transform: translateY(-3px);
+}
+
+/* Logo */
+.logo h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo h1 a {
+    text-decoration: none;
+    color: #4a5c8a;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+}
+
+/* Full Width Field */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Input Field */
+.input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field label {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #555;
+    font-weight: 600;
+}
+
+/* Inputs & Textarea */
+.input-field input,
+.input-field textarea {
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid #dde3f0;
+    font-size: 14px;
+    background-color: #f9fbff;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+/* Focus Effect */
+.input-field input:focus,
+.input-field textarea:focus {
+    border-color: #a0b8ff;
+    box-shadow: 0 0 8px rgba(160, 184, 255, 0.3);
+    background-color: #ffffff;
+}
+
+/* Textarea */
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* Checkbox */
+.check-remain {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #a0c4ff, #cdb4ff);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* Button Hover */
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(160, 184, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .w3l-loginblock {
+        width: 95%;
+        padding: 30px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+}
