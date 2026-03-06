@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="manage-packages-page">
+    <div class="row g-4 justify-content-center">
+        <div class="col-lg-8">
+            <div class="manage-card">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <h3 class="mb-1">Edit Package</h3>
+                        <p class="text-muted mb-0">Update details for <strong>{{ package.title }}</strong>.</p>
+                    </div>
+                    <a href="{% url 'manage_packages' %}" class="btn btn-outline-secondary">Back</a>
+                </div>
+
+                <form method="POST" class="manage-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Title</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Duration (days)</label>
+                            {{ form.duration }}
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Price</label>
+                            {{ form.price }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Package Image</label>
+                            {{ form.image }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Sort Order</label>
+                            {{ form.sort_order }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Short Description</label>
+                            {{ form.short_description }}
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                {{ form.is_active }}
+                                <label class="form-check-label" for="id_is_active">Active Package</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

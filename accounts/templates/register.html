@@ -1,98 +1,127 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Minimal Login Form</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Font -->
-    <link href="//fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+{% block content %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/reg.css' %}">
-    {% if saved %}
-    <script>
-        alert('{{saved}}')
-    </script>
-    {% endif %}
-
-    {% if error %}
-    <script>
-        alert('{{error}}')
-    </script>
-    {% endif %}
-</head>
-
-<body>
-
-<div class="w3l-loginblock signin-form">
-
-    <div class="logo">
-        <h1><a href="#">Registeration page</a></h1>
-    </div>
-
-    <div class="login-form">
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <div class="form-grid">
-
-                <div class="input-field">
-                    <label>name</label>
-                    <input type="text" name="name" placeholder="name" required>
+<section class="auth-shell register-shell">
+    <div class="auth-card register-card mx-auto">
+        <div class="auth-media d-none d-lg-block">
+            <div class="auth-image-panel register-image-panel">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80" alt="Scenic travel path">
+                <div class="auth-image-text">
+                    <p>CREATE ACCOUNT</p>
+                    <h3>Start your colorful travel story with Dreamland.</h3>
                 </div>
-
-                <div class="input-field">
-                    <label>Email</label>
-                    <input type="email" name="email" placeholder="Email" required>
-                </div>
-
-                <div class="input-field">
-                    <label>Mobile</label>
-                    <input type="text" name="mobile" placeholder="Contact No" required>
-                </div>
-
-                <div class="input-field">
-                    <label>Password</label>
-                    <input type="password" name="password" placeholder="Password" required>
-                </div>
-
-                <div class="input-field">
-                    <label>Address</label>
-                    <textarea name="address" placeholder="Enter Address" required></textarea>
-                </div>
-
-                <div class="input-field">
-                    <label>City</label>
-                    <input type="text" name="city" placeholder="Enter City" required>
-                </div>
-
-                <div class="input-field">
-                    <label>State</label>
-                    <input type="text" name="state" placeholder="Enter State" required>
-                </div>
-
-                <div class="input-field">
-                    <label>Pincode</label>
-                    <input type="text" name="pincode" placeholder="Enter Pincode" required>
-                </div>
-
             </div>
+        </div>
 
-            <div class="check-remain">
-                <input type="checkbox" name="remember">
-                <span>Remember Me</span>
+        <div class="auth-content">
+            <div class="auth-form-wrap register-form-wrap">
+                <h3 class="mb-3">Create Your Account</h3>
+                <p class="auth-subtitle">Register once and unlock curated travel packages and quick bookings.</p>
+
+                {% if saved %}
+                <div class="alert alert-success">
+                    {{ saved }}
+                </div>
+                {% endif %}
+
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                <form method="POST" autocomplete="on">
+                    {% csrf_token %}
+
+                    <div class="row g-2">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" autocomplete="off" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" autocomplete="off" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input type="tel" name="mobile" class="form-control" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" autocomplete="tel-national" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" autocomplete="new-password" data-lpignore="true" required>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea name="address" class="form-control" rows="2" required></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">City</label>
+                            <input type="text" name="city" class="form-control" autocomplete="address-level2" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">State</label>
+                            <select name="state" class="form-select" autocomplete="address-level1" required>
+                                <option value="" selected disabled>Select State</option>
+                                <option>Andhra Pradesh</option>
+                                <option>Arunachal Pradesh</option>
+                                <option>Assam</option>
+                                <option>Bihar</option>
+                                <option>Chhattisgarh</option>
+                                <option>Goa</option>
+                                <option>Gujarat</option>
+                                <option>Haryana</option>
+                                <option>Himachal Pradesh</option>
+                                <option>Jharkhand</option>
+                                <option>Karnataka</option>
+                                <option>Kerala</option>
+                                <option>Madhya Pradesh</option>
+                                <option>Maharashtra</option>
+                                <option>Manipur</option>
+                                <option>Meghalaya</option>
+                                <option>Mizoram</option>
+                                <option>Nagaland</option>
+                                <option>Odisha</option>
+                                <option>Punjab</option>
+                                <option>Rajasthan</option>
+                                <option>Sikkim</option>
+                                <option>Tamil Nadu</option>
+                                <option>Telangana</option>
+                                <option>Tripura</option>
+                                <option>Uttar Pradesh</option>
+                                <option>Uttarakhand</option>
+                                <option>West Bengal</option>
+                                <option>Andaman and Nicobar Islands</option>
+                                <option>Chandigarh</option>
+                                <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                                <option>Delhi</option>
+                                <option>Jammu and Kashmir</option>
+                                <option>Ladakh</option>
+                                <option>Lakshadweep</option>
+                                <option>Puducherry</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pincode</label>
+                            <input type="text" name="pincode" class="form-control" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 auth-btn">
+                        Register Now
+                    </button>
+                </form>
             </div>
-
-            <button type="submit" class="btn">Register Now</button>
-
-        </form>
-
+        </div>
     </div>
+</section>
 
-</div>
-
-</body>
-</html>
+{% endblock %}

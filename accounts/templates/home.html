@@ -1,68 +1,115 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dreamland Destinations</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
 
-<nav class="navbar">
-    <div class="logo">
-    <a href="{% url 'home' %}">
-        <img src="{% static 'images/dream.jpg' %}" 
-             alt="Dream Logo" 
-             class="small-logo">
-    </a>
+{% block content %}
+
+<div class="home-page">
+    <section class="home-hero position-relative overflow-hidden">
+        <div class="hero-pattern"></div>
+        <div class="row align-items-center g-4 position-relative">
+            <div class="col-lg-6">
+                <p class="hero-kicker">PREMIUM TRAVEL MANAGEMENT</p>
+                <h1>Explore the world in soft, beautiful comfort.</h1>
+                <p class="hero-lead">Curated packages, elegant stays, and smooth transport planning for stress-free journeys across destinations you will remember forever.</p>
+                <div class="hero-actions">
+                    <a href="{% url 'packages' %}" class="btn btn-primary btn-lg">Explore Packages</a>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'packages' %}" class="btn btn-outline-primary btn-lg">Plan My Trip</a>
+                    {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg">Plan My Trip</a>
+                    {% endif %}
+                </div>
+                <div class="hero-metrics">
+                    <div>
+                        <span class="metric-value">10k+</span>
+                        <span class="metric-label">Happy Travelers</span>
+                    </div>
+                    <div>
+                        <span class="metric-value">250+</span>
+                        <span class="metric-label">Verified Hotels</span>
+                    </div>
+                    <div>
+                        <span class="metric-value">24/7</span>
+                        <span class="metric-label">Support Team</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hero-image-wrap">
+                    <img src="{% static 'images/flight.jpg' %}" alt="Beautiful mountain travel destination" class="hero-image">
+                    <div class="hero-float-card">
+                        <h6>Dreamland Signature Trips</h6>
+                        <p>Personalized itineraries with premium stays and scenic experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-features mt-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <article class="feature-card h-100">
+                    <span class="feature-icon"><i class="fa-solid fa-bus"></i></span>
+                    <h4>Comfortable Travel</h4>
+                    <p>Well-maintained transport, preferred seating and reliable pickup schedules.</p>
+                </article>
+            </div>
+
+            <div class="col-md-4">
+                <article class="feature-card h-100">
+                    <span class="feature-icon"><i class="fa-solid fa-hotel"></i></span>
+                    <h4>Premium Stays</h4>
+                    <p>Handpicked properties with quality amenities and verified guest experiences.</p>
+                </article>
+            </div>
+
+            <div class="col-md-4">
+                <article class="feature-card h-100">
+                    <span class="feature-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                    <h4>Precise Itineraries</h4>
+                    <p>Structured day-by-day plans built for efficient and stress-free travel.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="destinations mt-5">
+        <div class="section-head text-center mb-4">
+            <p class="hero-kicker mb-2">AESTHETIC DESTINATIONS</p>
+            <h2>Places that feel magical</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <article class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=900&q=80" alt="Beach destination">
+                    <div class="destination-overlay">
+                        <h5>Beach Escapes</h5>
+                        <p>Sunset views and calm waters.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80" alt="Mountain destination">
+                    <div class="destination-overlay">
+                        <h5>Mountain Retreats</h5>
+                        <p>Breathe in peaceful alpine air.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="destination-card">
+                    <img src="{% static 'images/city.jpg' %}" alt="City lights destination">
+                    <div class="destination-overlay">
+                        <h5>City Highlights</h5>
+                        <p>Culture, food and vibrant nights.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 </div>
-    <ul>
-<li><a href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a></li>
 
-<li><a href="{% url 'packages' %}">
-    <i class="fa-solid fa-suitcase"></i> Packages
-</a></li>
-
-{% if request.user.is_authenticated %}
-    <li><a href="{% url 'logout' %}">
-        <i class="fa-solid fa-right-from-bracket"></i> Logout
-    </a></li>
-{% else %}
-    <li><a href="{% url 'login' %}">
-        <i class="fa-solid fa-right-to-bracket"></i> Login
-    </a></li>
-
-    <li><a href="{% url 'register' %}">
-        <i class="fa-solid fa-user-plus"></i> Register
-    </a></li>
-{% endif %}
-
-    </ul>
-</nav>
-
-<section class="hero">
-    <h1>Explore The World With Us 🌍</h1>
-    <p>Your journey begins here. Book amazing travel packages now!</p>
-    <a href="#" class="hero-btn">Explore Packages</a>
-</section>
-
-<section class="features">
-    <div class="card">
-        <h3>🚌 Comfortable Travel</h3>
-        <p>Luxury bus travel with confirmed seats.</p>
-    </div>
-
-    <div class="card">
-        <h3>🏨 Best Hotels</h3>
-        <p>Premium stay with all facilities included.</p>
-    </div>
-
-    <div class="card">
-        <h3>📅 Perfect Itinerary</h3>
-        <p>Well planned day-night travel schedule.</p>
-    </div>
-</section>
-
-</body>
-</html>
+{% endblock %}

@@ -1,66 +1,61 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Travel Packages</title>
-    <link rel="stylesheet" href="{% static 'css/packages.css' %}">
-</head>
-<body>
 
-<section class="packages-section">
+{% block content %}
 
-    <h2 class="section-title">Our Travel Packages 🌍</h2>
-
-    <div class="packages-grid">
-
-        <div class="card">
-            <h3>Goa Getaway 🏖</h3>
-            <p>3 Days / 2 Nights</p>
-            <div class="price">₹7,999</div>
-            <button>Book Now</button>
-        </div>
-
-        <div class="card">
-            <h3>Manali Adventure ❄</h3>
-            <p>4 Days / 3 Nights</p>
-            <div class="price">₹9,999</div>
-            <button>Book Now</button>
-        </div>
-
-        <div class="card">
-            <h3>Jaipur Heritage 🏰</h3>
-            <p>2 Days / 1 Night</p>
-            <div class="price">₹5,999</div>
-            <button>Book Now</button>
-        </div>
-
-        <div class="card">
-            <h3>Kerala Backwaters 🌴</h3>
-            <p>5 Days / 4 Nights</p>
-            <div class="price">₹12,999</div>
-            <button>Book Now</button>
-        </div>
-
-        <div class="card">
-            <h3>Shimla Retreat 🌄</h3>
-            <p>3 Days / 2 Nights</p>
-            <div class="price">₹8,499</div>
-            <button>Book Now</button>
-        </div>
-
-        <div class="card">
-            <h3>Dubai Escape ✈</h3>
-            <p>4 Days / 3 Nights</p>
-            <div class="price">₹29,999</div>
-            <button>Book Now</button>
-        </div>
-
+<section class="packages-page">
+    <div class="packages-topbar mb-3">
+        <a href="{% url 'home' %}" class="back-home-link">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            Back to Home
+        </a>
     </div>
 
-</section>
-<div class="bottom-back">
-    <a href="{% url 'home' %}">← Back to Home</a>
-</div>
+    <div class="packages-hero mb-4">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+                <p class="hero-kicker mb-2">CURATED HOLIDAY COLLECTION</p>
+                <h2>Beautiful journeys, designed for your pace</h2>
+                <p>Pick from our carefully planned trips with balanced comfort, sightseeing and memorable experiences.</p>
+            </div>
+            <div class="col-lg-5">
+                <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80" alt="Travel collage" class="packages-hero-image">
+            </div>
+        </div>
+    </div>
 
-</body>
-</html>
+    <div class="row g-4">
+        {% for package in packages %}
+        <div class="col-md-6 col-lg-4">
+            <div class="package-card h-100">
+                {% if package.image %}
+                <img src="{{ package.image.url }}" class="package-img" alt="{{ package.title }}">
+                {% elif package.image_url %}
+                <img src="{{ package.image_url }}" class="package-img" alt="{{ package.title }}">
+                {% else %}
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80" class="package-img" alt="Travel destination">
+                {% endif %}
+
+                <div class="package-body">
+                    <h5>{{ package.title }}</h5>
+                    <p class="package-meta"><i class="fa-regular fa-clock"></i> {{ package.duration }} Days</p>
+                    {% if package.short_description %}
+                    <p class="package-desc">{{ package.short_description }}</p>
+                    {% endif %}
+                    <p class="package-price">Rs {{ package.price }}</p>
+                    <button class="btn btn-primary w-100" type="button" disabled>Book Now</button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="empty-block">
+                <h5>No packages available yet</h5>
+                <p>Admin can add packages from Admin Login portal.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
