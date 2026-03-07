@@ -38,12 +38,26 @@
 
                 <div class="package-body">
                     <h5>{{ package.title }}</h5>
-                    <p class="package-meta"><i class="fa-regular fa-clock"></i> {{ package.duration }} Days</p>
-                    {% if package.short_description %}
-                    <p class="package-desc">{{ package.short_description }}</p>
+                    <p class="package-meta"><i class="fa-regular fa-clock"></i> {{ package.duration }} Days / {{ package.duration|add:"-1" }} Nights</p>
+                    {% if is_preview %}
+                        {% if package.short_description %}
+                        <p class="package-desc">{{ package.short_description|truncatechars:90 }}</p>
+                        {% else %}
+                        <p class="package-desc">Handpicked stay, guided sightseeing, and smooth local transport.</p>
+                        {% endif %}
+                        <a href="{% url 'login' %}?next={% url 'packages' %}" class="btn btn-outline-primary w-100">Read More</a>
+                    {% else %}
+                        {% if package.short_description %}
+                        <p class="package-desc">{{ package.short_description }}</p>
+                        {% endif %}
+                        <p class="package-price">Rs {{ package.price }}</p>
+                        <div class="package-detail-points mb-3">
+                            <p class="mb-1"><strong>Places Included:</strong> {{ package.title }} local highlights and nearby attractions.</p>
+                            <p class="mb-1"><strong>Inclusions:</strong> Hotel stay, travel support, guided sightseeing.</p>
+                            <p class="mb-0"><strong>Trip Type:</strong> Balanced itinerary for comfort and exploration.</p>
+                        </div>
+                        <button class="btn btn-primary w-100" type="button" disabled>Book Now</button>
                     {% endif %}
-                    <p class="package-price">Rs {{ package.price }}</p>
-                    <button class="btn btn-primary w-100" type="button" disabled>Book Now</button>
                 </div>
             </div>
         </div>

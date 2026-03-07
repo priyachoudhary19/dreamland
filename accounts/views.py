@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .forms import TravelPackageForm
 from .models import TravelBooking, TravelPackage, registration
@@ -31,6 +33,15 @@ def register(request):
         obj.pincode = request.POST["pincode"]
         obj.save()
 
+        # 📧 Send Email
+        send_mail(
+            'Registration Successful - Dreamland Destinations',
+            'Hello! Your registration for Dreamland Destinations was successful.',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+
         messages.success(request, "Registration successful. Please login.")
         return redirect("login")
 
@@ -50,7 +61,7 @@ def login_view(request):
             login(request, user)
             if next_url:
                 return redirect(next_url)
-            return redirect("packages")
+            return redirect("home")
 
         return render(request, "login.html", {"error": "Invalid credentials", "next": next_url})
 
@@ -61,7 +72,7 @@ def admin_login_view(request):
     next_url = request.GET.get("next") or request.POST.get("next")
 
     if request.user.is_authenticated and request.user.is_staff:
-        return redirect("manage_packages")
+        return redirect("admin_home")
 
     if request.method == "POST":
         username = request.POST.get("username", "").strip()
@@ -72,7 +83,7 @@ def admin_login_view(request):
             login(request, user)
             if next_url:
                 return redirect(next_url)
-            return redirect("manage_packages")
+            return redirect("admin_home")
 
         return render(
             request,
@@ -87,17 +98,31 @@ def home(request):
     return render(request, "home.html")
 
 
+@login_required(login_url="/admin-portal/login/")
+def admin_home(request):
+    if not request.user.is_staff:
+        return redirect("admin_login")
 
-@login_required(login_url="/login/")
+    return render(request, "admin_home.html")
+
+
 def packages(request):
     packages_qs = TravelPackage.objects.filter(is_active=True)
-    booked_package_ids = set(
-        TravelBooking.objects.filter(user=request.user).values_list("package_id", flat=True)
-    )
+
+    booked_package_ids = set()
+    if request.user.is_authenticated:
+        booked_package_ids = set(
+            TravelBooking.objects.filter(user=request.user).values_list("package_id", flat=True)
+        )
+
     return render(
         request,
         "packages.html",
-        {"packages": packages_qs, "booked_package_ids": booked_package_ids},
+        {
+            "packages": packages_qs,
+            "booked_package_ids": booked_package_ids,
+            "is_preview": not request.user.is_authenticated,
+        },
     )
 
 
@@ -144,6 +169,14 @@ def manage_packages(request):
 
 
 @login_required(login_url="/admin-portal/login/")
+def manage_bookings(request):
+    if not request.user.is_staff:
+        return redirect("admin_login")
+
+    return render(request, "admin_bookings.html")
+
+
+@login_required(login_url="/admin-portal/login/")
 def delete_package(request, package_id):
     if not request.user.is_staff:
         return redirect("admin_login")
@@ -178,4 +211,3 @@ def edit_package(request, package_id):
 def logout_view(request):
     logout(request)
     return redirect("home")
-

@@ -5,9 +5,9 @@
 <section class="auth-shell admin-shell">
     <div class="admin-login-card mx-auto">
         <div class="admin-login-head">
-            <p>ADMIN PORTAL</p>
-            <h3>Package Management Login</h3>
-            <span>Only authorized admin/staff users are allowed.</span>
+            
+            <h3>Login</h3>
+            
         </div>
 
         {% if error %}
@@ -18,8 +18,8 @@
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next|default:'' }}">
             <div class="mb-3">
-                <label class="form-label">Admin Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Enter admin username" autocomplete="off" required>
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Password</label>
