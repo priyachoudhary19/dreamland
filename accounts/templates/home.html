@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block page_back_link %}{% endblock %}
+
 {% block content %}
 
 <div class="home-page">
@@ -34,6 +36,7 @@
             <div class="col-lg-6">
                 <div class="hero-image-wrap">
                     <img src="{% static 'images/flight.jpg' %}" alt="Beautiful mountain travel destination" class="hero-image">
+                    <div class="hero-image-glow"></div>
                     <div class="hero-float-card">
                         <h6>Dreamland Signature Trips</h6>
                         <p>Personalized itineraries with premium stays and scenic experiences.</p>
@@ -44,6 +47,10 @@
     </section>
 
     <section class="home-features mt-5">
+        <div class="section-head text-center mb-4">
+            <p class="hero-kicker mb-2">WHY DREAMLAND</p>
+            <h2>Designed to feel calm, premium, and easy</h2>
+        </div>
         <div class="row g-4">
             <div class="col-md-4">
                 <article class="feature-card h-100">

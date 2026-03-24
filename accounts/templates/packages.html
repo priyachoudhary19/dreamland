@@ -4,19 +4,17 @@
 {% block content %}
 
 <section class="packages-page">
-    <div class="packages-topbar mb-3">
-        <a href="{% url 'home' %}" class="back-home-link">
-            <i class="fa-solid fa-arrow-left-long"></i>
-            Back to Home
-        </a>
-    </div>
-
     <div class="packages-hero mb-4">
         <div class="row g-4 align-items-center">
             <div class="col-lg-7">
                 <p class="hero-kicker mb-2">CURATED HOLIDAY COLLECTION</p>
                 <h2>Beautiful journeys, designed for your pace</h2>
                 <p>Pick from our carefully planned trips with balanced comfort, sightseeing and memorable experiences.</p>
+                <div class="hero-ribbon">
+                    <span><i class="fa-solid fa-camera-retro"></i> Scenic destinations</span>
+                    <span><i class="fa-solid fa-hotel"></i> Comfortable stays</span>
+                    <span><i class="fa-solid fa-calendar-days"></i> Guided planning</span>
+                </div>
             </div>
             <div class="col-lg-5">
                 <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=80" alt="Travel collage" class="packages-hero-image">
@@ -27,7 +25,7 @@
     <div class="row g-4">
         {% for package in packages %}
         <div class="col-md-6 col-lg-4">
-            <div class="package-card h-100">
+            <div class="package-card package-card-lux h-100">
                 {% if package.image %}
                 <img src="{{ package.image.url }}" class="package-img" alt="{{ package.title }}">
                 {% elif package.image_url %}
@@ -45,18 +43,17 @@
                         {% else %}
                         <p class="package-desc">Handpicked stay, guided sightseeing, and smooth local transport.</p>
                         {% endif %}
-                        <a href="{% url 'login' %}?next={% url 'packages' %}" class="btn btn-outline-primary w-100">Read More</a>
+                        <a href="{% url 'package_detail' package.id %}" class="btn btn-outline-primary w-100">Read More</a>
                     {% else %}
-                        {% if package.short_description %}
-                        <p class="package-desc">{{ package.short_description }}</p>
-                        {% endif %}
                         <p class="package-price">Rs {{ package.price }}</p>
                         <div class="package-detail-points mb-3">
-                            <p class="mb-1"><strong>Places Included:</strong> {{ package.title }} local highlights and nearby attractions.</p>
-                            <p class="mb-1"><strong>Inclusions:</strong> Hotel stay, travel support, guided sightseeing.</p>
-                            <p class="mb-0"><strong>Trip Type:</strong> Balanced itinerary for comfort and exploration.</p>
+                            <p class="mb-0"><strong>Trip Type:</strong> {{ package.trip_type|default:"Balanced itinerary for comfort and exploration." }}</p>
                         </div>
-                        <button class="btn btn-primary w-100" type="button" disabled>Book Now</button>
+                        {% if package.id in booked_package_ids %}
+                        <a href="{% url 'package_detail' package.id %}" class="btn btn-success w-100">View Booking & Payment</a>
+                        {% else %}
+                        <a href="{% url 'package_detail' package.id %}" class="btn btn-primary w-100">Read More</a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

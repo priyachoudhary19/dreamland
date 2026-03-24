@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
@@ -19,6 +20,19 @@
 
 <main class="site-main flex-grow-1">
     <div class="container py-4 py-lg-5">
+        {% block page_back_link %}
+        <div class="mb-3">
+            <a
+                href="{% url 'home' %}"
+                class="back-home-link"
+                onclick="if (window.history.length > 1) { event.preventDefault(); window.history.back(); }"
+            >
+                <i class="fa-solid fa-arrow-left-long"></i>
+                Go Back
+            </a>
+        </div>
+        {% endblock %}
+
         {% if messages %}
         <div class="site-messages mb-4">
             {% for message in messages %}
@@ -38,6 +52,7 @@
     <div class="container py-5">
         <div class="row g-4 align-items-start">
             <div class="col-lg-7 col-md-6">
+                <p class="footer-kicker">DREAMLAND TRAVELS</p>
                 <h5>Dreamland Travels</h5>
                 <p>Trusted travel planning for memorable family holidays and premium group tours with warm service and transparent pricing.</p>
                 <div class="footer-social mt-3">

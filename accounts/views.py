@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.core.mail import send_mail
 from django.conf import settings
 
-from .forms import TravelPackageForm
+from .forms import TravelBookingForm, TravelPackageForm
 from .models import TravelBooking, TravelPackage, registration
 
 
@@ -114,10 +114,11 @@ def packages(request):
     packages_qs = TravelPackage.objects.filter(is_active=True)
 
     booked_package_ids = set()
+    user_bookings = {}
     if request.user.is_authenticated:
-        booked_package_ids = set(
-            TravelBooking.objects.filter(user=request.user).values_list("package_id", flat=True)
-        )
+        bookings = TravelBooking.objects.filter(user=request.user).select_related("package")
+        booked_package_ids = {booking.package_id for booking in bookings}
+        user_bookings = {booking.package_id: booking for booking in bookings}
 
     return render(
         request,
@@ -125,6 +126,28 @@ def packages(request):
         {
             "packages": packages_qs,
             "booked_package_ids": booked_package_ids,
+            "user_bookings": user_bookings,
+            "is_preview": not request.user.is_authenticated,
+        },
+    )
+
+
+def package_detail(request, package_id):
+    package = get_object_or_404(TravelPackage, id=package_id, is_active=True)
+    booking = None
+    booking_form = None
+
+    if request.user.is_authenticated:
+        booking = TravelBooking.objects.filter(user=request.user, package=package).first()
+        booking_form = TravelBookingForm(instance=booking)
+
+    return render(
+        request,
+        "package_detail.html",
+        {
+            "package": package,
+            "booking": booking,
+            "booking_form": booking_form,
             "is_preview": not request.user.is_authenticated,
         },
     )
@@ -132,18 +155,39 @@ def packages(request):
 
 @login_required(login_url="/login/")
 def book_package(request, package_id):
-    if request.method != "POST":
-        return redirect("packages")
+
 
     package = get_object_or_404(TravelPackage, id=package_id, is_active=True)
-    _, created = TravelBooking.objects.get_or_create(user=request.user, package=package)
+    if request.method != "POST":
+        return redirect("package_detail", package_id=package.id)
+
+    existing_booking = TravelBooking.objects.filter(user=request.user, package=package).first()
+    form = TravelBookingForm(request.POST, instance=existing_booking)
+
+    if not form.is_valid():
+        return render(
+            request,
+            "package_detail.html",
+            {
+                "package": package,
+                "booking": existing_booking,
+                "booking_form": form,
+                "is_preview": False,
+            },
+        )
+
+    booking = form.save(commit=False)
+    booking.user = request.user
+    booking.package = package
+    created = booking.pk is None
+    booking.save()
 
     if created:
         messages.success(request, f"{package.title} booked successfully.")
     else:
-        messages.info(request, f"You already booked {package.title}.")
+        messages.info(request, f"Your booking details for {package.title} have been updated.")
 
-    return redirect("packages")
+    return redirect("package_detail", package_id=package.id)
 
 
 @login_required(login_url="/admin-portal/login/")
@@ -177,7 +221,25 @@ def manage_bookings(request):
     if not request.user.is_staff:
         return redirect("admin_login")
 
-    return render(request, "admin_bookings.html")
+    bookings = TravelBooking.objects.select_related("user", "package").all()
+    booking_users = [booking.user for booking in bookings]
+    registration_map = {
+        item.email: item.name
+        for item in registration.objects.filter(
+            email__in=[user.email for user in booking_users if user.email]
+        )
+    }
+
+    for booking in bookings:
+        email = booking.user.email or "-"
+        booking.display_email = email
+        booking.display_name = (
+            registration_map.get(booking.user.email)
+            or booking.user.get_full_name()
+            or booking.user.username
+        )
+
+    return render(request, "admin_bookings.html", {"bookings": bookings})
 
 
 @login_required(login_url="/admin-portal/login/")

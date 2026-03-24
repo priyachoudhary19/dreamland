@@ -27,6 +27,11 @@ class TravelPackage(models.Model):
     image = models.FileField(upload_to="packages/", blank=True, null=True)
     image_url = models.URLField(blank=True)
     short_description = models.CharField(max_length=220, blank=True)
+    detailed_itinerary = models.TextField(blank=True)
+    places_included = models.TextField(blank=True)
+    inclusions = models.TextField(blank=True)
+    trip_type = models.CharField(max_length=120, blank=True)
+    payment_details = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     sort_order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -39,8 +44,40 @@ class TravelPackage(models.Model):
 
 
 class TravelBooking(models.Model):
+    PAYMENT_STATUS_PENDING = "pending"
+    PAYMENT_STATUS_ADVANCE = "advance_paid"
+    PAYMENT_STATUS_COMPLETED = "completed"
+    PAYMENT_STATUS_CHOICES = [
+        (PAYMENT_STATUS_PENDING, "Pending"),
+        (PAYMENT_STATUS_ADVANCE, "Advance Paid"),
+        (PAYMENT_STATUS_COMPLETED, "Completed"),
+    ]
+
+    PAYMENT_METHOD_UPI = "upi"
+    PAYMENT_METHOD_BANK = "bank_transfer"
+    PAYMENT_METHOD_CASH = "cash"
+    PAYMENT_METHOD_CHOICES = [
+        (PAYMENT_METHOD_UPI, "UPI"),
+        (PAYMENT_METHOD_BANK, "Bank Transfer"),
+        (PAYMENT_METHOD_CASH, "Cash at Office"),
+    ]
+
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     package = models.ForeignKey(TravelPackage, on_delete=models.CASCADE)
+    traveler_count = models.PositiveIntegerField(default=1)
+    travel_date = models.DateField(blank=True, null=True)
+    contact_number = models.CharField(max_length=15, blank=True)
+    special_requests = models.TextField(blank=True)
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        default=PAYMENT_METHOD_UPI,
+    )
+    payment_status = models.CharField(
+        max_length=20,
+        choices=PAYMENT_STATUS_CHOICES,
+        default=PAYMENT_STATUS_PENDING,
+    )
     booked_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

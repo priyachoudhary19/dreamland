@@ -44,6 +44,26 @@
                             {{ form.short_description }}
                         </div>
                         <div class="col-12">
+                            <label class="form-label">Full Itinerary</label>
+                            {{ form.detailed_itinerary }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Places Included</label>
+                            {{ form.places_included }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Inclusions</label>
+                            {{ form.inclusions }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Trip Type</label>
+                            {{ form.trip_type }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Payment Details</label>
+                            {{ form.payment_details }}
+                        </div>
+                        <div class="col-12">
                             <div class="form-check">
                                 {{ form.is_active }}
                                 <label class="form-check-label" for="id_is_active">Active Package</label>

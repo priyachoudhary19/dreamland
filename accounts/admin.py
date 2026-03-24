@@ -17,7 +17,7 @@ class RegistrationAdmin(admin.ModelAdmin):
 class TravelPackageAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "duration", "price", "is_active", "sort_order")
     list_filter = ("is_active",)
-    search_fields = ("title", "short_description")
+    search_fields = ("title", "short_description", "detailed_itinerary")
     ordering = ("sort_order", "id")
 
 

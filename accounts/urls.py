@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin-portal/login/', admin_login_view, name='admin_login'),
     path('admin-portal/home/', admin_home, name='admin_home'),
     path('packages/', packages, name='packages'),
+    path('packages/<int:package_id>/', package_detail, name='package_detail'),
     path('packages/<int:package_id>/book/', book_package, name='book_package'),
     path('admin-portal/packages/', manage_packages, name='manage_packages'),
     path('admin-portal/bookings/', manage_bookings, name='manage_bookings'),
